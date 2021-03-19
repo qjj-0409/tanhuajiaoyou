@@ -5,6 +5,7 @@ import {Input} from 'react-native-elements';
 import validator from '../../../utils/validator';
 import request from '../../../utils/request';
 import {ACCOUNT_LOGIN} from '../../../utils/pathMap';
+import THButton from '../../../components/THButton';
 
 class Index extends Component {
   state = {
@@ -45,6 +46,11 @@ class Index extends Component {
     } catch (error) {
       console.log(error);
     }
+  };
+
+  // 点击获取验证码事件
+  handleGetVcode = () => {
+    console.log('获取验证码');
   };
 
   render() {
@@ -95,6 +101,18 @@ class Index extends Component {
                   size: pxToDp(20),
                 }}
               />
+            </View>
+            {/* 渐变按钮 */}
+            <View>
+              {/* align-self 属性用于设置弹性元素自身在侧轴（这里是横轴）方向上的对齐方式。 */}
+              <View
+                style={{width: '85%', height: pxToDp(40), alignSelf: 'center'}}>
+                <THButton
+                  style={{borderRadius: pxToDp(20)}}
+                  onPress={this.handleGetVcode}>
+                  获取验证码
+                </THButton>
+              </View>
             </View>
           </View>
           {/* 2.1 登录 结束 */}
