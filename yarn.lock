@@ -6009,6 +6009,11 @@ react-is@^16.12.0, react-is@^16.13.0, react-is@^16.7.0, react-is@^16.8.1, react-
   resolved "https://registry.npm.taobao.org/react-is/download/react-is-17.0.1.tgz#5b3531bd76a645a4c9fb6e693ed36419e3301339"
   integrity sha1-WzUxvXamRaTJ+25pPtNkGeMwEzk=
 
+react-native-confirmation-code-field@^6.5.1:
+  version "6.5.1"
+  resolved "https://registry.npm.taobao.org/react-native-confirmation-code-field/download/react-native-confirmation-code-field-6.5.1.tgz#0097c9748c2abbe28d8b34ee343ef60cf93434c2"
+  integrity sha1-AJfJdIwqu+KNizTuND72DPk0NMI=
+
 react-native-elements@^3.3.2:
   version "3.3.2"
   resolved "https://registry.npm.taobao.org/react-native-elements/download/react-native-elements-3.3.2.tgz#42cc05c90a5c85c8aee95ce363bce0c5a39fe633"

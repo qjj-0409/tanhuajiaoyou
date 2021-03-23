@@ -1,35 +1,39 @@
-import React, {Component} from 'react';
-import {Text, TouchableOpacity, StyleSheet} from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
-import {pxToDp} from '../../utils/stylesKits';
+import React, { Component } from 'react'
+import { Text, TouchableOpacity, StyleSheet } from 'react-native'
+import LinearGradient from 'react-native-linear-gradient'
+import { pxToDp } from '../../utils/stylesKits'
 
 class Index extends Component {
   static defaultProps = {
     style: {},
     textStyle: {},
-  };
+    disabled: false
+  }
   render() {
     return (
       // 虽然加了borderRadius样式，但是没有显示出效果，原因是borderRadius加在了TouchableOpacity身上，但是LinearGradient组件会撑开盒子，所以给TouchableOpacity加上溢出隐藏overflow: 'hidden'
       <TouchableOpacity
+        disabled={this.props.disabled}
         style={{
           width: '100%',
           height: '100%',
           ...this.props.style,
-          overflow: 'hidden',
+          overflow: 'hidden'
         }}
-        onPress={this.props.onPress}>
+        onPress={this.props.onPress}
+      >
         <LinearGradient
-          start={{x: 0, y: 0}}
-          end={{x: 1, y: 0}}
+          start={{ x: 0, y: 0 }}
+          end={{ x: 1, y: 0 }}
           colors={['#9b63cd', '#e06988']}
-          style={styles.linearGradient}>
-          <Text style={{...styles.buttonText, ...this.props.textStyle}}>
+          style={styles.linearGradient}
+        >
+          <Text style={{ ...styles.buttonText, ...this.props.textStyle }}>
             {this.props.children}
           </Text>
         </LinearGradient>
       </TouchableOpacity>
-    );
+    )
   }
 }
 
@@ -42,15 +46,15 @@ var styles = StyleSheet.create({
     width: '100%',
     height: '100%',
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'center'
   },
   buttonText: {
     fontSize: pxToDp(18),
     fontFamily: 'Gill Sans',
     textAlign: 'center',
     color: '#ffffff',
-    backgroundColor: 'transparent',
-  },
-});
+    backgroundColor: 'transparent'
+  }
+})
 
-export default Index;
+export default Index
