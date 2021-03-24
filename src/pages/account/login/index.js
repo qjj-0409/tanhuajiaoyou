@@ -50,7 +50,6 @@ class Index extends Component {
         return
       }
       const res = await request.post(ACCOUNT_LOGIN, { phone: phoneNumber })
-      console.log(res)
       if (res.code === '10000') {
         // 请求成功
         this.setState({
@@ -120,10 +119,8 @@ class Index extends Component {
         vcode: vcodeTxt
       })
       if (res.code !== '10000') {
-        console.log(res)
         return
       }
-      console.log(this.props)
       if (res.data.isNew) {
         // 新用户 userinfo
         this.props.navigation.navigate('UserInfo')
