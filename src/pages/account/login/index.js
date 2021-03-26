@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, Text, Image, StatusBar, StyleSheet } from 'react-native'
 import { Input } from 'react-native-elements'
 import { CodeField, Cursor } from 'react-native-confirmation-code-field'
+import { inject, observer } from 'mobx-react'
 
 import { pxToDp } from '../../../utils/stylesKits'
 import validator from '../../../utils/validator'
@@ -10,6 +11,8 @@ import { ACCOUNT_LOGIN, ACCOUNT_VALIDATEVCODE } from '../../../utils/pathMap'
 import THButton from '../../../components/THButton'
 import Toast from '../../../utils/Toast'
 
+@inject('RootStore')
+@observer
 class Index extends Component {
   state = {
     phoneNumber: '15915912345', // 手机号码
@@ -105,6 +108,7 @@ class Index extends Component {
        *   前端：对验证码长度进行校验
        *   后台：将手机号和验证码一起发送给后台
        *   后台返回值字段：isNew ---> 用来标识新老用户
+       *   存储用户信息（mobile、token、userId）
        * 2.根据新老用户跳转到指定页面
        *   新用户 ---> 完善个人信息页面
        *   老用户 ---> 交友 - 首页
@@ -121,6 +125,8 @@ class Index extends Component {
       if (res.code !== '10000') {
         return
       }
+      // 存储用户数据到mobx中
+      this.props.RootStore.setUserInfo(phoneNumber, res.data.token, res.data.id)
       if (res.data.isNew) {
         // 新用户 userinfo
         this.props.navigation.navigate('UserInfo')

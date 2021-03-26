@@ -21,5 +21,9 @@
             <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
       </activity>
+      <!-- 极光的配置 -->
+      <meta-data android:name="JPUSH_CHANNEL" android:value="${APP_CHANNEL}" />
+      <meta-data android:name="JPUSH_APPKEY" android:value="${JPUSH_APPKEY}" />
+      <!-- 极光的配置 -->
     </application>
 </manifest>
