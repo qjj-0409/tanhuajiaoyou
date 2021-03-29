@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
-import { View, Text, Image, StatusBar, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  Image,
+  StatusBar,
+  StyleSheet,
+  AsyncStorage
+} from 'react-native'
 import { Input } from 'react-native-elements'
 import { CodeField, Cursor } from 'react-native-confirmation-code-field'
 import { inject, observer } from 'mobx-react'
@@ -127,12 +134,21 @@ class Index extends Component {
       }
       // 存储用户数据到mobx中
       this.props.RootStore.setUserInfo(phoneNumber, res.data.token, res.data.id)
+      // 存储本地用户数据到本地缓存中，永久
+      AsyncStorage.setItem(
+        'userinfo',
+        JSON.stringify({
+          mobile: phoneNumber,
+          token: res.data.token,
+          userId: res.data.id
+        })
+      )
       if (res.data.isNew) {
         // 新用户 userinfo
         this.props.navigation.navigate('UserInfo')
       } else {
         // 老用户
-        alert('老用户 跳转到交友页面')
+        this.props.navigation.navigate('Tabbar')
       }
     } catch (error) {
       console.log(error)

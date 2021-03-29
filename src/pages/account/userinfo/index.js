@@ -58,14 +58,23 @@ class Index extends Component {
     Picker.init({
       pickerData: CityJson,
       selectedValue: ['北京', '北京'],
-      wheelFlex: [1, 1, 0], // 显示省和市
+      wheelFlex: [1, 1, 1], // 显示省和市
       pickerConfirmBtnText: '确定',
       pickerCancelBtnText: '取消',
       pickerTitleText: '选择城市',
-      onPickerConfirm: data => {
-        // data =  [广东，广州，天河]
+      onPickerConfirm: async data => {
         this.setState({
           city: data[1]
+        })
+        let cityDesc = data.join('')
+        const res = await Geo.getCityPostion(cityDesc, data[1])
+        const address = res.geocodes[0].formatted_address
+        const lng = res.geocodes[0].location.split(',')[0]
+        const lat = res.geocodes[0].location.split(',')[1]
+        this.setState({
+          address,
+          lng,
+          lat
         })
       }
     })
@@ -149,12 +158,8 @@ class Index extends Component {
     // 上传成功，完善个人信息
     let params = this.state
     params.header = res0.data.headImgPath
-    params.address = '北京市丰台区六里桥七号院'
-    params.lng = '116.303327'
-    params.lat = '39.885099'
     // 上传用户信息
     const res1 = await request.privatePost(ACCOUNT_REGINFO, params)
-    console.log(res1)
     if (res1.code !== '10000') {
       // 完善信息失败
       return
@@ -164,7 +169,6 @@ class Index extends Component {
       this.props.RootStore.userId,
       this.props.RootStore.mobile
     )
-    console.log(res2)
 
     // 极光注册完成
     // 1.关闭审核中浮层
@@ -173,7 +177,7 @@ class Index extends Component {
     Toast.smile('恭喜 操作成功', 2000, 'center')
     // 3.跳转页面 交友页面
     setTimeout(() => {
-      alert('跳转页面 交友页面')
+      this.props.navigation.navigate('Tabbar')
     }, 2000)
   }
 

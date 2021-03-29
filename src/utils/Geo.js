@@ -38,6 +38,17 @@ class Geo {
     })
     return Promise.resolve(res.data)
   }
+  // 根据城市获取地理位置
+  async getCityPostion(address, city) {
+    const res = await axios.get('https://restapi.amap.com/v3/geocode/geo', {
+      params: {
+        key: '0a0d9f7fea5b2cdfeef2ebdc55b5fbb9',
+        address,
+        city
+      }
+    })
+    return Promise.resolve(res.data)
+  }
 }
 
 export default new Geo()
