@@ -36,11 +36,25 @@ instance.interceptors.response.use(
 export default {
   get: instance.get,
   post: instance.post,
+  // 带token的post请求
   privatePost: (url, data = {}, options = {}) => {
     const token = RootStore.token
     const headers = options.headers || {}
     return instance.post(url, data, {
       ...options,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...headers
+      }
+    })
+  },
+  // 带token的get请求
+  privateGet: (url, data = {}, options = {}) => {
+    const token = RootStore.token
+    const headers = options.headers || {}
+    return instance.get(url, {
+      ...options,
+      params: data,
       headers: {
         Authorization: `Bearer ${token}`,
         ...headers

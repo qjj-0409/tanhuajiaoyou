@@ -23,8 +23,7 @@ class Nav extends Component {
     const { initialRouteName } = this.state
     return (
       <NavigationContainer>
-        <Stack.Navigator headerMode="none" initialRouteName="UserInfo">
-          {/* <Stack.Navigator headerMode="none" initialRouteName={initialRouteName}> */}
+        <Stack.Navigator headerMode="none" initialRouteName={initialRouteName}>
           <Stack.Screen name="Demo" component={Demo} />
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="UserInfo" component={UserInfo} />
