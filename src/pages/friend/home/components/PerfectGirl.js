@@ -105,7 +105,7 @@ class PerfectGirl extends Component {
               <Text style={{ color: '#787878' }}>{perfectGirl.xueli}</Text>
               <Text style={{ color: '#787878' }}> | </Text>
               <Text style={{ color: '#787878' }}>
-                {perfectGirl.agediff < 10 ? '年龄相仿' : '有点代购'}
+                {perfectGirl.agediff < 10 ? '年龄相仿' : '有点代沟'}
               </Text>
             </View>
           </View>

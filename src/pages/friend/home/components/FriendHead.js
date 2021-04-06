@@ -1,15 +1,26 @@
 import React, { Component } from 'react'
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import SvgUri from 'react-native-svg-uri'
+import { NavigationContext } from '@react-navigation/native'
+
 import { tanhua, near, testSoul } from '../../../../res/fonts/iconSvg'
 import { pxToDp } from '../../../../utils/stylesKits'
 
 class FriendHead extends Component {
+  static contextType = NavigationContext
+  // 页面跳转
+  goPage = page => {
+    this.context.navigate(page)
+  }
+
   render() {
     return (
       <View style={styles.container}>
         {/* 1.探花 开始 */}
-        <TouchableOpacity style={styles.touchItem}>
+        <TouchableOpacity
+          style={styles.touchItem}
+          onPress={() => this.goPage('TanHua')}
+        >
           <View style={{ ...styles.itemView, backgroundColor: '#fe5012' }}>
             <SvgUri width={40} height={40} fill="#fff" svgXmlData={tanhua} />
           </View>

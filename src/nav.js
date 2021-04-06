@@ -5,6 +5,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import Login from './pages/account/login'
 import UserInfo from './pages/account/userinfo'
 import Tabbar from './tabbar'
+import TanHua from './pages/friend/tanhua'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -16,7 +17,7 @@ class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      initialRouteName: props.RootStore.token ? 'Tabbar' : 'Login'
+      initialRouteName: props.RootStore.token ? 'TanHua' : 'Login'
     }
   }
   render() {
@@ -28,6 +29,7 @@ class Nav extends Component {
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="UserInfo" component={UserInfo} />
           <Stack.Screen name="Tabbar" component={Tabbar} />
+          <Stack.Screen name="TanHua" component={TanHua} />
         </Stack.Navigator>
       </NavigationContainer>
     )
