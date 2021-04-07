@@ -28,7 +28,10 @@ class FriendHead extends Component {
         </TouchableOpacity>
         {/* 1.探花 结束 */}
         {/* 2.搜附近 开始 */}
-        <TouchableOpacity style={styles.touchItem}>
+        <TouchableOpacity
+          style={styles.touchItem}
+          onPress={() => this.goPage('Search')}
+        >
           <View style={{ ...styles.itemView, backgroundColor: '#2db3f8' }}>
             <SvgUri width={40} height={40} fill="#fff" svgXmlData={near} />
           </View>
