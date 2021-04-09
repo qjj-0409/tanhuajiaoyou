@@ -4,6 +4,7 @@ import { Provider } from 'mobx-react'
 import Nav from './src/nav'
 import Geo from './src/utils/Geo'
 import RootStore from './src/mobx'
+import UserStore from './src/mobx/userStore'
 import JMessage from './src/utils/JMessage'
 
 class App extends Component {
@@ -32,7 +33,7 @@ class App extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-        <Provider RootStore={RootStore}>
+        <Provider RootStore={RootStore} UserStore={UserStore}>
           {this.state.isInitGeo ? <Nav /> : <></>}
         </Provider>
       </View>

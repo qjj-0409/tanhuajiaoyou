@@ -12,11 +12,17 @@ import {
   my,
   selectedMy
 } from './res/fonts/iconSvg'
+import {inject, observer} from 'mobx-react'
+
 import Friend from './pages/friend/home'
 import Group from './pages/group/home'
 import Message from './pages/message/home'
 import My from './pages/my/home'
+import request from './utils/request'
+import {MY_INFO} from './utils/pathMap'
 
+@inject('UserStore')
+@observer
 class Tabbar extends Component {
   state = {
     selectedTab: 'friend',
@@ -65,6 +71,14 @@ class Tabbar extends Component {
       }
     ]
   }
+
+  async componentDidMount() {
+    // 1.发送请求获取当前用户信息
+    const res = await request.privateGet(MY_INFO)
+    // 2.用户信息存入到mobx中
+    this.props.UserStore.setUser(res.data)
+  }
+
   render() {
     const { selectedTab, pages } = this.state
     return (
