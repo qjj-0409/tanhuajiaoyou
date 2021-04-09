@@ -38,7 +38,7 @@ class Index extends Component {
     // 1.获取当前的测试题等级的相关数据
     const { questions, currentIndex } = this.state
     // 2.跳转到答题页面并且带上数据
-    this.props.navigation.navigate('testQA', questions[currentIndex])
+    this.props.navigation.navigate('TestQA', questions[currentIndex])
   }
 
   // 生命周期函数-组件挂载完毕后执行

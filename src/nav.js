@@ -8,7 +8,8 @@ import Tabbar from './tabbar'
 import TanHua from './pages/friend/tanhua'
 import Search from './pages/friend/search'
 import TestSoul from './pages/friend/testSoul'
-import testQA from './pages/friend/testSoul/testQA'
+import TestQA from './pages/friend/testSoul/testQA'
+import TestResult from './pages/friend/testSoul/testResult'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -35,7 +36,8 @@ class Nav extends Component {
           <Stack.Screen name="TanHua" component={TanHua} />
           <Stack.Screen name="Search" component={Search} />
           <Stack.Screen name="TestSoul" component={TestSoul} />
-          <Stack.Screen name="testQA" component={testQA} />
+          <Stack.Screen name="TestQA" component={TestQA} />
+          <Stack.Screen name="TestResult" component={TestResult} />
         </Stack.Navigator>
       </NavigationContainer>
     )
