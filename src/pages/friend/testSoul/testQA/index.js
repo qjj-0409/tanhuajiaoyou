@@ -50,7 +50,6 @@ class Index extends Component {
       this.props.route.params.qid
     )
     const res = await request.privateGet(url)
-    console.log(res)
     this.setState({
       questionList: res.data
     })
