@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
-import { View, Text, StatusBar, Image } from 'react-native'
+import { View, Text, StatusBar, Image, TouchableOpacity } from 'react-native'
 import { ImageHeaderScrollView } from 'react-native-image-header-scroll-view'
 import { Overlay } from 'teaset'
+import { NavigationContext } from '@react-navigation/native'
 
 import { pxToDp } from '../../../utils/stylesKits'
 import FriendHead from './components/FriendHead'
@@ -24,6 +25,8 @@ import FilterPanel from './components/FilterPanel'
 // fateValue: 28.5
 
 class Index extends Component {
+  static contextType = NavigationContext
+
   state = {
     params: {
       page: 1, // 当前页数
@@ -37,6 +40,7 @@ class Index extends Component {
     // 推荐朋友列表，数组
     recommends: []
   }
+  isLoading = false // 控制请求下一页数据的loading
 
   componentDidMount() {
     this.getRecommends()
@@ -48,8 +52,9 @@ class Index extends Component {
       ...this.state.params,
       ...filterParams
     })
+    this.isLoading = false
     this.setState({
-      recommends: res.data
+      recommends: [...this.state.recommends, ...res.data]
     })
   }
 
@@ -81,6 +86,32 @@ class Index extends Component {
     this.getRecommends(filterParams)
   }
 
+  // 滚动加载下一页
+  onScroll = ({nativeEvent}) => {
+    /**
+     * 触底公式：
+     * 列表内容的高度 - 可视区域的高度 - 滚动条距离顶部的高度 = 0
+     * 列表内容的高度：nativeEvent.contentSize.height
+     * 可视区域的高度：nativeEvent.layoutMeasurement.height
+     * 滚动条距离顶部的高度：nativeEvent.contentOffset.y
+     */
+    const isReachBottom = nativeEvent.contentSize.height - nativeEvent.layoutMeasurement.height - nativeEvent.contentOffset.y
+    if (!this.isLoading && !isReachBottom) {
+      this.isLoading = true
+      /**
+       * react修改state中某一对象的某一属性值
+       * Object.assign(目标对象, 源对象) 方法用于将所有可枚举属性的值从一个或多个源对象复制到目标对象，并返回目标对象。
+       * 如果目标对象中的属性有与源对象相同的键，则属性将被源对象中的属性覆盖。
+       * 将改变后的目标对象通过setState赋值
+       */
+      let newParams = Object.assign(this.state.params, {page: this.state.params.page + 1})
+      this.setState({
+        params: newParams
+      })
+      this.getRecommends()
+    }
+  }
+
   render() {
     const { recommends } = this.state
     return (
@@ -92,6 +123,7 @@ class Index extends Component {
        *  renderForeground：渲染顶部结构
        */
       <ImageHeaderScrollView
+        onScroll={this.onScroll}
         maxHeight={pxToDp(130)}
         minHeight={pxToDp(44)}
         headerImage={require('../../../res/headfriend.png')}
@@ -145,8 +177,9 @@ class Index extends Component {
             <View>
               {recommends.map((v, i) => {
                 return (
-                  <View
+                  <TouchableOpacity
                     key={i}
+                    onPress={() => this.context.navigate('Detail', {id: v.id})}
                     style={{
                       flexDirection: 'row',
                       backgroundColor: '#fff',
@@ -221,7 +254,7 @@ class Index extends Component {
                       />
                       <Text style={{ color: '#666' }}>{v.fateValue}</Text>
                     </View>
-                  </View>
+                  </TouchableOpacity>
                 )
               })}
             </View>

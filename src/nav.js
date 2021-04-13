@@ -10,6 +10,7 @@ import Search from './pages/friend/search'
 import TestSoul from './pages/friend/testSoul'
 import TestQA from './pages/friend/testSoul/testQA'
 import TestResult from './pages/friend/testSoul/testResult'
+import Detail from './pages/friend/detail'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -21,7 +22,7 @@ class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      initialRouteName: props.RootStore.token ? 'TestSoul' : 'Login'
+      initialRouteName: props.RootStore.token ? 'Tabbar' : 'Login'
     }
   }
   render() {
@@ -38,6 +39,7 @@ class Nav extends Component {
           <Stack.Screen name="TestSoul" component={TestSoul} />
           <Stack.Screen name="TestQA" component={TestQA} />
           <Stack.Screen name="TestResult" component={TestResult} />
+          <Stack.Screen name="Detail" component={Detail} />
         </Stack.Navigator>
       </NavigationContainer>
     )
