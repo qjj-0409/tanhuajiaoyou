@@ -20,6 +20,7 @@ import Message from './pages/message/home'
 import My from './pages/my/home'
 import request from './utils/request'
 import {MY_INFO} from './utils/pathMap'
+import JMessage from './utils/JMessage'
 
 @inject('UserStore')
 @observer
@@ -77,6 +78,8 @@ class Tabbar extends Component {
     const res = await request.privateGet(MY_INFO)
     // 2.用户信息存入到mobx中
     this.props.UserStore.setUser(res.data)
+    // 3.进行极光登录
+    await JMessage.login(res.data.guid, res.data.mobile)
   }
 
   render() {

@@ -47,11 +47,8 @@ class Index extends Component {
   }
 
   // 获取推荐朋友列表
-  getRecommends = async (filterParams = {}) => {
-    const res = await request.privateGet(FRIENDS_RECOMMEND, {
-      ...this.state.params,
-      ...filterParams
-    })
+  getRecommends = async () => {
+    const res = await request.privateGet(FRIENDS_RECOMMEND, this.state.params)
     this.isLoading = false
     this.setState({
       recommends: [...this.state.recommends, ...res.data]
@@ -83,7 +80,16 @@ class Index extends Component {
   // 接收筛选组件传递的数据
   handleSubmitFilter = filterParams => {
     // 将接收到的filterParams 和旧的params做一个对象合并
-    this.getRecommends(filterParams)
+    // 1.重置页码为 1
+    // 2.重置推荐列表加载条件
+    // 3.清空原来的推荐列表
+    // 4.重新获取推荐列表数据
+    let newParams = Object.assign(this.state.params, {page: 1, ...filterParams})
+    this.setState({
+      params: newParams,
+      recommends: []
+    })
+    this.getRecommends()
   }
 
   // 滚动加载下一页
