@@ -8,12 +8,18 @@ import { Carousel } from 'teaset'
 import LinearGradient from 'react-native-linear-gradient'
 // 图片预览
 import ImageViewer from 'react-native-image-zoom-viewer'
+// mobx全局数据
+import { inject, observer } from 'mobx-react'
 
 import request from '../../../utils/request'
 import { BASE_URI, FRIENDS_PERSONALINFO } from '../../../utils/pathMap'
 import { pxToDp } from '../../../utils/stylesKits'
 import IconFont from '../../../components/IconFont'
+import JMessage from '../../../utils/JMessage'
+import Toast from '../../../utils/Toast'
 
+@inject('UserStore')
+@observer
 class Index extends Component {
   state = {
     userDetail: {}, // 用户详情
@@ -31,7 +37,8 @@ class Index extends Component {
   }
   // 获取朋友详情
   getDetail = async () => {
-    const url = FRIENDS_PERSONALINFO.replace(':id', this.props.route.params.id)
+    const url = FRIENDS_PERSONALINFO.replace(':id', 1588)
+    // const url = FRIENDS_PERSONALINFO.replace(':id', this.props.route.params.id)
     const res = await request.privateGet(url, this.params)
     this.isLoading = false
     this.setState({
@@ -78,6 +85,18 @@ class Index extends Component {
       this.params.page++
       this.getDetail()
     }
+  }
+
+  // 极光-发送喜欢
+  sendLike = async () => {
+    // 收件人 => 正在被浏览的用户 this.state.userDetail
+    // 文本内容 => 当前登录用户的手机号 + 喜欢了你
+    // 额外的数据 => 当前登录用户信息
+    const guid = this.state.userDetail.guid
+    const text = this.props.UserStore.user.mobile + ' 喜欢了你'
+    const extras = { user: JSON.stringify(this.props.UserStore.user)}
+    const res = await JMessage.sendTextMessage(guid, text, extras)
+    Toast.smile('喜欢成功', 1000, 'center')
   }
 
   // 生命周期函数-组件挂载完成后触发
@@ -235,7 +254,7 @@ class Index extends Component {
                     <Text style={{color: '#fff'}}>聊一下</Text>
                   </LinearGradient>
                 </TouchableOpacity>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={this.sendLike}>
                   <LinearGradient
                     colors={['#6d47f8', '#e36b82']}
                     start={{x: 0, y: 0}}
