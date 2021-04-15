@@ -93,10 +93,16 @@ class Index extends Component {
     // 文本内容 => 当前登录用户的手机号 + 喜欢了你
     // 额外的数据 => 当前登录用户信息
     const guid = this.state.userDetail.guid
-    const text = this.props.UserStore.user.mobile + ' 喜欢了你'
+    const text = this.props.UserStore.user.nick_name + ' 喜欢了你'
     const extras = { user: JSON.stringify(this.props.UserStore.user)}
     const res = await JMessage.sendTextMessage(guid, text, extras)
     Toast.smile('喜欢成功', 1000, 'center')
+  }
+
+  // 跳转到聊天页面
+  goChat = () => {
+    const { userDetail } = this.state
+    this.props.navigation.navigate('Chat', userDetail)
   }
 
   // 生命周期函数-组件挂载完成后触发
@@ -236,7 +242,10 @@ class Index extends Component {
                 </View>
               </View>
               <View style={{flexDirection: 'row'}}>
-                <TouchableOpacity style={{marginRight: pxToDp(8)}}>
+                <TouchableOpacity
+                  style={{marginRight: pxToDp(8)}}
+                  onPress={this.goChat}
+                >
                   <LinearGradient
                     colors={['#eeac5e', '#ec7c50']}
                     start={{x: 0, y: 0}}

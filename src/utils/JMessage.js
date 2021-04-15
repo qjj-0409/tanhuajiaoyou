@@ -12,8 +12,8 @@ export default {
   },
   /**
    * 注册
-   * @param {string} username this.props.UserStore.guid (159159000031617008018572)
-   * @param {string} password this.props.UserStore.mobile (15915900003)
+   * @param {String} username this.props.UserStore.guid (159159000031617008018572)
+   * @param {String} password this.props.UserStore.mobile (15915900003)
    * @returns 
    */
   register(username, password) {
@@ -43,9 +43,9 @@ export default {
   },
   /**
    * 发送文本消息
-   * @param {string} username 接收信息的对象
-   * @param {string} text 信息文本内容
-   * @param {object} extras 附带的参数
+   * @param {String} username 接收信息的对象
+   * @param {String} text 信息文本内容
+   * @param {Object} extras 附带的参数
    * @returns 
    */
   sendTextMessage(username, text, extras = {}) {
@@ -63,6 +63,40 @@ export default {
         type: 'single',
         username,
         text,
+        extras
+      }, resolve, reject)
+    })
+  },
+  /**
+   * 获取历史消息
+   * @param {String} username 要获取和谁的聊天记录
+   * @param {Number} from 从第几条开始
+   * @param {Number} limit 一共要获取几条
+   * @returns 
+   */
+  getHistoryMessages(username, from, limit) {
+    return new Promise((resolve, reject) => {
+      JMessage.getHistoryMessages({
+        type: 'single',
+        username,
+        from,
+        limit
+      }, resolve, reject)
+    })
+  },
+  /**
+   * 发送图片消息
+   * @param {String} username 接收信息的对象
+   * @param {String} path 图片路径
+   * @param {Object} extras 额外参数
+   * @returns 
+   */
+  sendImageMessage(username, path, extras = {}) {
+    return new Promise((resolve, reject) => {
+      JMessage.sendImageMessage({
+        type: 'single',
+        username,
+        path,
         extras
       }, resolve, reject)
     })

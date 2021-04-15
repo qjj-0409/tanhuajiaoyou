@@ -22,7 +22,7 @@ import Toast from '../../../utils/Toast'
 @observer
 class Index extends Component {
   state = {
-    phoneNumber: '15915912345', // 手机号码
+    phoneNumber: '13412000009', // 手机号码
     phoneValid: true, // 手机号码是否正确
     showLogin: true, // 是否显示登录页面
     vcodeTxt: '', // 输入的验证码

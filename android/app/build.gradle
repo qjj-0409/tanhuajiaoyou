@@ -212,6 +212,9 @@ dependencies {
     // 如果只需要支持WebP格式而不需要动图
     implementation 'com.facebook.fresco:webpsupport:2.0.0'
 
+    // 即时通讯
+    implementation project(':aurora-imui-react-native')
+
     // 极光配置
     compile project(':jmessage-react-plugin') // 新增的
     compile project(':jcore-react-native')  // 新增的
