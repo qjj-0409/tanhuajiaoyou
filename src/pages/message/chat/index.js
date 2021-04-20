@@ -412,8 +412,6 @@ class TestRNIMUI extends Component {
   render() {
     return (
       <View style={styles.container}>
-        {/* <StatusBar backgroundColor="transparent" translucent={true} /> */}
-        {/* <THNav title={this.props.route.params.nick_name} /> */}
         <View style={this.state.navigationBar}
           ref="NavigatorView">
           <Text

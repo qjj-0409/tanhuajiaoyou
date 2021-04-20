@@ -26,7 +26,7 @@ import JMessage from './utils/JMessage'
 @observer
 class Tabbar extends Component {
   state = {
-    selectedTab: 'friend',
+    selectedTab: 'group',
     pages: [
       {
         selected: 'friend',
