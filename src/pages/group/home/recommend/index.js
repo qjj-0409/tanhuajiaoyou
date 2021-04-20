@@ -5,6 +5,8 @@ import {inject, observer} from 'mobx-react'
 import { ActionSheet } from 'teaset'
 // 图片预览
 import ImageViewer from 'react-native-image-zoom-viewer'
+// 1.导入 NavigationContext 路由跳转
+import { NavigationContext } from '@react-navigation/native'
 
 import request from '../../../../utils/request'
 import { QZ_TJDT, BASE_URI, QZ_DT_DZ, QZ_DT_XH, QZ_DT_BGXQ } from '../../../../utils/pathMap'
@@ -18,6 +20,9 @@ import JMessage from '../../../../utils/JMessage'
 @inject('UserStore')
 @observer
 class Index extends Component {
+  // 2.定义静态属性
+  static contextType = NavigationContext
+
   state = {
     list: [
       // {
@@ -235,6 +240,12 @@ class Index extends Component {
     })
   }
 
+  // 跳转到评论页面
+  goComment = item => {
+    // 3.通过上下文访问导航对象
+    this.context.navigate('Comment', item)
+  }
+
   // 生命周期函数-组件挂载完毕后执行
   componentDidMount() {
     this.getList()
@@ -373,6 +384,7 @@ class Index extends Component {
                   {/* 评论 */}
                   <TouchableOpacity
                     style={{flexDirection: 'row', alignItems: 'center'}}
+                    onPress={this.goComment.bind(this, item)}
                   >
                     <IconFont style={{color: '#666'}} name='iconpinglun' />
                     <Text style={{color: '#666'}}>{item.comment_count}</Text>
