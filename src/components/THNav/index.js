@@ -46,7 +46,10 @@ class Index extends Component {
           >
             {this.props.title}
           </Text>
-          <Text style={{ width: pxToDp(80) }} />
+          <Text
+            style={{ width: pxToDp(80), color: '#fff', textAlign: 'right' }}
+            onPress={this.props.onRightPress || function(){}}
+          >{this.props.rightText}</Text>
         </ImageBackground>
       </View>
     )

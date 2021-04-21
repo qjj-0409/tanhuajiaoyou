@@ -5482,12 +5482,7 @@ mockdate@^3.0.2:
   resolved "https://registry.npm.taobao.org/mockdate/download/mockdate-3.0.3.tgz#944e655bde9d1d35046601adb00aeb09c98a5ee7"
   integrity sha1-lE5lW96dHTUEZgGtsArrCcmKXuc=
 
-moment@^2.22.0:
-  version "2.29.1"
-  resolved "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz?cache=0&sync_timestamp=1602337231601&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
-
-moment@^2.29.1:
+moment@^2.22.0, moment@^2.29.1:
   version "2.29.1"
   resolved "https://registry.npm.taobao.org/moment/download/moment-2.29.1.tgz?cache=0&sync_timestamp=1601983320283&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fmoment%2Fdownload%2Fmoment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
   integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
@@ -6239,6 +6234,11 @@ react-native-image-pan-zoom@^2.1.12:
   version "2.1.12"
   resolved "https://registry.npm.taobao.org/react-native-image-pan-zoom/download/react-native-image-pan-zoom-2.1.12.tgz#eb98bf56fb5610379bdbfdb63219cc1baca98fd2"
   integrity sha1-65i/VvtWEDeb2/22MhnMG6ypj9I=
+
+react-native-image-picker@^3.3.2:
+  version "3.3.2"
+  resolved "https://registry.npm.taobao.org/react-native-image-picker/download/react-native-image-picker-3.3.2.tgz#dde494ce4fbb5c36a4ea56346b751b85223d6b25"
+  integrity sha1-3eSUzk+7XDak6lY0a3UbhSI9ayU=
 
 react-native-image-zoom-viewer@^3.0.1:
   version "3.0.1"

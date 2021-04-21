@@ -13,6 +13,7 @@ import TestResult from './pages/friend/testSoul/testResult'
 import Detail from './pages/friend/detail'
 import Chat from './pages/message/chat'
 import Comment from './pages/group/home/recommend/comment'
+import Publish from './pages/group/home/recommend/publish'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -24,7 +25,7 @@ class Nav extends Component {
   constructor(props) {
     super(props)
     this.state = {
-      initialRouteName: props.RootStore.token ? 'Tabbar' : 'Login'
+      initialRouteName: props.RootStore.token ? 'Demo' : 'Login'
     }
   }
   render() {
@@ -44,6 +45,7 @@ class Nav extends Component {
           <Stack.Screen name="Detail" component={Detail} />
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Comment" component={Comment} />
+          <Stack.Screen name="Publish" component={Publish} />
         </Stack.Navigator>
       </NavigationContainer>
     )

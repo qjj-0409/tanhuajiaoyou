@@ -1,6 +1,8 @@
 import { PermissionsAndroid, Platform } from 'react-native'
 import { init, Geolocation } from 'react-native-amap-geolocation'
 import axios from 'axios'
+import Toast from './Toast'
+
 class Geo {
   // 初始化
   async initGeo() {
@@ -28,6 +30,7 @@ class Geo {
   }
   // 根据地理位置获取城市定位
   async getCityByLocation() {
+    Toast.showLoading('努力获取中')
     const { longitude, latitude } = await this.getCurrentPosition()
     const res = await axios.get('https://restapi.amap.com/v3/geocode/regeo', {
       params: {
@@ -36,6 +39,7 @@ class Geo {
         key: '0a0d9f7fea5b2cdfeef2ebdc55b5fbb9'
       }
     })
+    Toast.hideLoading()
     return Promise.resolve(res.data)
   }
   // 根据城市获取地理位置
