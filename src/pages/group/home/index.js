@@ -14,7 +14,7 @@ export default () => {
    * initialPage：初始选择的选项卡的索引，默认为0 ===第一个选项卡。
    */
   return <ScrollableTabView
-    initialPage={0}
+    initialPage={1}
     renderTabBar={() => <CustormerBar />}
   >
     <Recommend tabLabel="推荐" />
