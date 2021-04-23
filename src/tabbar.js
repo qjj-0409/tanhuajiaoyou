@@ -25,8 +25,14 @@ import JMessage from './utils/JMessage'
 @inject('UserStore')
 @observer
 class Tabbar extends Component {
+  constructor(props) {
+    super(props)
+    if (props.route.params && props.route.params.pagename) {
+      this.state.selectedTab = props.route.params.pagename
+    }
+  }
   state = {
-    selectedTab: 'group',
+    selectedTab: 'friend',
     pages: [
       {
         selected: 'friend',
