@@ -270,6 +270,7 @@ class TestRNIMUI extends Component {
 
     message.msgType = 'text'
     message.text = text
+    message.fromUser.avatarPath = BASE_URI + this.props.UserStore.user.header
 
     AuroraIController.appendMessages([message])
 

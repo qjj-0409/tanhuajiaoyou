@@ -1,4 +1,5 @@
 import JMessage from 'jmessage-react-plugin'
+import Toast from './Toast'
 
 export default {
   // 初始化
@@ -99,6 +100,20 @@ export default {
         path,
         extras
       }, resolve, reject)
+    })
+  },
+  /**
+   * 从本地数据库获取会话列表。默认按照会话的最后一条消息时间降序排列。
+   * @returns 会话数组
+   */
+  getConversations() {
+    Toast.showLoading('加载中')
+    return new Promise((resolve, reject) => {
+      JMessage.getConversations((conArr) => { // conArr: 会话数组。
+        // do something.
+        Toast.hideLoading()
+        resolve(conArr)
+      }, reject)
     })
   }
 }
