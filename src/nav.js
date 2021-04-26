@@ -14,6 +14,8 @@ import Detail from './pages/friend/detail'
 import Chat from './pages/message/chat'
 import Comment from './pages/group/home/recommend/comment'
 import Publish from './pages/group/home/recommend/publish'
+import Follow from './pages/my/follow'
+import Trends from './pages/my/trends'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -46,6 +48,8 @@ class Nav extends Component {
           <Stack.Screen name="Chat" component={Chat} />
           <Stack.Screen name="Comment" component={Comment} />
           <Stack.Screen name="Publish" component={Publish} />
+          <Stack.Screen name="Follow" component={Follow} />
+          <Stack.Screen name="Trends" component={Trends} />
         </Stack.Navigator>
       </NavigationContainer>
     )

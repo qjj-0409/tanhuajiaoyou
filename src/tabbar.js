@@ -32,7 +32,7 @@ class Tabbar extends Component {
     }
   }
   state = {
-    selectedTab: 'message',
+    selectedTab: 'my',
     pages: [
       {
         selected: 'friend',
