@@ -23,7 +23,7 @@ class Index extends Component {
   // 列表菜单映射关系
   list = [
     { iconName: 'icondongtai', title: '我的动态', color: '#018001', page: 'Trends' },
-    { iconName: 'iconshuikanguowo', title: '谁看过我', color: '#ff0100', page: '' },
+    { iconName: 'iconshuikanguowo', title: '谁看过我', color: '#ff0100', page: 'Visitors' },
     { iconName: 'iconshezhi', title: '通用设置', color: '#883387', page: '' },
     { iconName: 'iconkefu', title: '客服在线', color: '#1e1fc2', page: '' }
   ]

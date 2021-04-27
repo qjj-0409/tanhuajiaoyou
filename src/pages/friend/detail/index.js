@@ -37,8 +37,8 @@ class Index extends Component {
   }
   // 获取朋友详情
   getDetail = async () => {
-    const url = FRIENDS_PERSONALINFO.replace(':id', 1588)
-    // const url = FRIENDS_PERSONALINFO.replace(':id', this.props.route.params.id)
+    // const url = FRIENDS_PERSONALINFO.replace(':id', 1588)
+    const url = FRIENDS_PERSONALINFO.replace(':id', this.props.route.params.id)
     const res = await request.privateGet(url, this.params)
     this.isLoading = false
     this.setState({
