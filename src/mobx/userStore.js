@@ -32,6 +32,11 @@ class UserStore {
   @action setUser(user) {
     this.user = user
   }
+
+  // 清除用户信息
+  @action clearUser() {
+    this.user = {}
+  }
 }
 
 export default new UserStore()

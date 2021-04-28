@@ -177,7 +177,8 @@ class Index extends Component {
     Toast.smile('恭喜 操作成功', 2000, 'center')
     // 3.跳转页面 交友页面
     setTimeout(() => {
-      this.props.navigation.navigate('Tabbar')
+      // this.props.navigation.navigate('Tabbar')
+      this.props.navigation.reset({routes: [{name: 'Tabbar'}]})
     }, 2000)
   }
 

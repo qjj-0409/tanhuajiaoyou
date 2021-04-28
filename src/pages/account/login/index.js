@@ -145,11 +145,14 @@ class Index extends Component {
       )
       if (res.data.isNew) {
         // 新用户 userinfo
-        this.props.navigation.navigate('UserInfo')
+        // this.props.navigation.navigate('UserInfo')
+        this.props.navigation.reset({routes: [{name: 'UserInfo'}]})
       } else {
         // 老用户
-        this.props.navigation.navigate('Tabbar')
+        // this.props.navigation.navigate('Tabbar')
+        this.props.navigation.reset({routes: [{name: 'Tabbar'}]})
       }
+      this.setState({showLogin: true})
     } catch (error) {
       console.log(error)
     }

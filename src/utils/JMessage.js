@@ -115,5 +115,9 @@ export default {
         resolve(conArr)
       }, reject)
     })
-  }
+  },
+  /**
+   * 极光退出
+   */
+  logout: JMessage.logout
 }

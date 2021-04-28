@@ -18,6 +18,7 @@ import Follow from './pages/my/follow'
 import Trends from './pages/my/trends'
 import Visitors from './pages/my/visitors'
 import UserUpdate from './pages/my/userUpdate'
+import Settings from './pages/my/settings'
 import Demo from './pages/Demo'
 import { inject, observer } from 'mobx-react'
 
@@ -54,6 +55,7 @@ class Nav extends Component {
           <Stack.Screen name="Trends" component={Trends} />
           <Stack.Screen name="Visitors" component={Visitors} />
           <Stack.Screen name="UserUpdate" component={UserUpdate} />
+          <Stack.Screen name="Settings" component={Settings} />
         </Stack.Navigator>
       </NavigationContainer>
     )
