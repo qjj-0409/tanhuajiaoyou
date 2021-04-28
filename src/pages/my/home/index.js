@@ -93,9 +93,10 @@ class Index extends Component {
               color: '#fff',
               fontSize: pxToDp(20)
             }}
+            onPress={() => this.context.navigate('UserUpdate')}
           />
           {/* 2.0 用户信息 开始 */}
-          <TouchableOpacity
+          <View
             style={{
               flexDirection: 'row',
               padding: pxToDp(15),
@@ -165,7 +166,7 @@ class Index extends Component {
                 <Text style={{color: '#fff', marginLeft: pxToDp(5), fontSize: pxToDp(14)}}>{city}</Text>
               </View>
             </View>
-          </TouchableOpacity>
+          </View>
           {/* 2.0 用户信息 结束 */}
         </LinearGradient>
         {/* 3.0 互相关注-喜欢-粉丝 开始 */}
