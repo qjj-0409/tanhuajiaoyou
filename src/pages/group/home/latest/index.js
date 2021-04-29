@@ -90,9 +90,9 @@ class Index extends Component {
     } else {
       Toast.smile('点赞成功')
       const text = `${this.props.UserStore.user.nick_name} 点赞了你的动态`
-      const extras = {user: JSON.stringify(this.props.UserStore.user)}
-      // JMessage.sendTextMessage(item.guid, text, extras)
-      JMessage.sendTextMessage('134120000081618303888430', text, extras)
+      const extras = {user: JSON.stringify(this.props.UserStore.user), type: 'DZ'}
+      JMessage.sendTextMessage(item.guid, text, extras)
+      // JMessage.sendTextMessage('134120000081618303888430', text, extras)
     }
     // 重新发请求获取列表数据
     this.params.page = 1

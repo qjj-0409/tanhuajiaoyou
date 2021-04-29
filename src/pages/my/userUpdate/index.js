@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, Image, TextInput } from 'react-native'
+import { Text, View, Image, TextInput, TouchableOpacity } from 'react-native'
 import { inject, observer } from 'mobx-react'
 import { ListItem, Overlay } from 'react-native-elements'
 // 裁剪图片
@@ -10,6 +10,7 @@ import DatePicker from 'react-native-datepicker'
 import Picker from 'react-native-picker'
 
 import THNav from '../../../components/THNav'
+import THButton from '../../../components/THButton'
 import { pxToDp } from '../../../utils/stylesKits'
 import { BASE_URI, ACCOUNT_CHECKHEADIMAGE, MY_SUBMITUSERINFO, MY_INFO } from '../../../utils/pathMap'
 import moment from '../../../utils/moment'
@@ -31,9 +32,22 @@ class Index extends Component {
   //   "xueli": "本科",
   //   "marry": "单身"
   // }
-  state =   {
-    isShowNickName: false, // 是否显示昵称输入框
-    isShowGender: false // 是否显示性别选择框
+  constructor(props) {
+    super(props)
+    const {header, nick_name, birthday, gender, city, xueli, marry } = this.props.UserStore.user
+    this.state = {
+      user: {
+        header: header || '',
+        nickname: nick_name || '',
+        birthday: moment(birthday).format('YYYY-MM-DD') || "",
+        gender: gender || "",
+        city: city || "",
+        xueli: xueli || "",
+        marry: marry || ""
+      },
+      isShowNickName: false, // 是否显示昵称输入框
+      submitLoading: false // 控制确认按钮是否可以点击
+    }
   }
 
   // 选择头像
@@ -53,12 +67,11 @@ class Index extends Component {
     }
     
     // 上传成功，完善个人信息
-    // let params = this.state
-    // params.header = res0.data.headImgPath
-    console.log(res0)
-    const header = res0.data.headImgShortPath
-    const res1 = await this.onSubmitUser({header})
-    console.log(res1)
+    const newheader = res0.data.headImgShortPath
+    const {header, ...others} = this.state.user
+    this.setState({
+      user: {header: newheader, ...others}
+    })
   }
 
   // 上传头像
@@ -81,17 +94,6 @@ class Index extends Component {
     })
   }
 
-  // 完成编辑
-  onSubmitUser = async (user) => {
-    const res = await request.privatePost(MY_SUBMITUSERINFO, user)
-    // 1.给用户一个友好的提示
-    Toast.smile('修改成功')
-    // 2.刷新数据
-    const res2 = await request.privateGet(MY_INFO)
-    this.props.UserStore.setUser(res2.data)
-    return Promise.resolve(res)
-  }
-
   // 编辑昵称
   nickNameUpdate = async ({nativeEvent}) => {
     /**
@@ -100,24 +102,46 @@ class Index extends Component {
      *   1.1 在state中声明一个txt变量，绑定给TextInput组件的value属性和onChangeText事件
      *   1.2 非受控表单的方式，软键盘的 确定/提交 被点击时，传递的参数 {nativeEvent: {text, eventCount, target}}
      */
-    const nickname = nativeEvent.text
-    if (!nickname.trim()) {
+    const newnickname = nativeEvent.text
+    if (!newnickname.trim()) {
       Toast.message('请输入合法的昵称')
       return
     }
-    await this.onSubmitUser({nickname})
-    this.setState({isShowNickName : false})
+    const {nickname, ...others} = this.state.user
+    this.setState({
+      user: {nickname: newnickname, ...others},
+      isShowNickName: false
+    })
   }
 
   // 编辑生日
-  birthdayUpdate = async (birthday) => {
-    await this.onSubmitUser({birthday})
+  birthdayUpdate = async (newbirthday) => {
+    const {birthday, ...others} = this.state.user
+    this.setState({
+      user: {birthday: newbirthday, ...others}
+    })
+  }
+
+  // 选择性别
+  chooseGender = () => {
+    Picker.init({
+      pickerData: ['男', '女'], // 可选数据项
+      selectedValue: [this.props.UserStore.user.gender], // 选中的值
+      wheelFlex: [1, 0, 0], // 显示省 市 区
+      pickerConfirmBtnText: '确定',
+      pickerCancelBtnText: '取消',
+      pickerTitleText: '选择性别',
+      onPickerConfirm: this.genderUpdate
+    })
+    Picker.show()
   }
 
   // 编辑性别
-  genderUpdate = async gender => {
-    await this.onSubmitUser({gender})
-    this.setState({isShowGender: false})
+  genderUpdate = async arr => {
+    const {gender, ...others} = this.state.user
+    this.setState({
+      user: {gender: arr[0], ...others}
+    })
   }
 
   // 选择城市
@@ -144,8 +168,10 @@ class Index extends Component {
 
   // 编辑城市
   cityUpdate = async (arr) => {
-    const city = arr[1]
-    this.onSubmitUser({city})
+    const {city, ...others} = this.state.user
+    this.setState({
+      user: {city: arr[1], ...others}
+    })
   }
 
   // 选择学历
@@ -164,8 +190,10 @@ class Index extends Component {
 
   // 编辑学历
   xueliUpdate = async arr => {
-    const xueli = arr[0]
-    this.onSubmitUser({xueli})
+    const {xueli, ...others} = this.state.user
+    this.setState({
+      user: {xueli: arr[0], ...others}
+    })
   }
 
   // 选择婚姻状态
@@ -184,14 +212,31 @@ class Index extends Component {
 
   // 编辑婚姻状态
   marryUpdate = async (arr) => {
-    const marry = arr[0]
-    await this.onSubmitUser({marry})
+    const {marry, ...others} = this.state.user
+    this.setState({
+      user: {marry: arr[0], ...others}
+    })
   }
-  
+
+  // 完成编辑
+  onSubmitUser = async () => {
+    if (this.state.submitLoading) return
+    this.setState({ submitLoading: true })
+    const res = await request.privatePost(MY_SUBMITUSERINFO, this.state.user)
+    this.setState({ submitLoading: false })
+    // 1.给用户一个友好的提示
+    if (res.code === '10000') {
+      Toast.smile('修改成功')
+      // 2.刷新数据
+      const res2 = await request.privateGet(MY_INFO)
+      this.props.UserStore.setUser(res2.data)
+    } else {
+      Toast.sad('修改失败，请稍后重试')
+    }
+  }
 
   render() {
-    const user = this.props.UserStore.user
-    const {isShowNickName, isShowGender} = this.state
+    const {user, isShowNickName, submitLoading} = this.state
     return (
       <View style={{flex: 1, backgroundColor: '#fff'}}>
         <THNav title="编辑资料" />
@@ -219,7 +264,7 @@ class Index extends Component {
           <ListItem.Content>
             <ListItem.Title style={{color: '#868686', fontSize: pxToDp(16)}}>昵称</ListItem.Title>
           </ListItem.Content>
-          <Text style={{color: '#666', fontSize: pxToDp(14)}}>{user.nick_name}</Text>
+          <Text style={{color: '#666', fontSize: pxToDp(14)}}>{user.nickname}</Text>
           <ListItem.Chevron />
         </ListItem>
         {/* 生日 */}
@@ -267,7 +312,7 @@ class Index extends Component {
           {/* 生日 弹出框 结束 */}
         </View>
         {/* 选择性别 */}
-        <ListItem bottomDivider onPress={() => this.setState({isShowGender: true})}>
+        <ListItem bottomDivider onPress={this.chooseGender}>
           <ListItem.Content>
             <ListItem.Title style={{color: '#868686', fontSize: pxToDp(16)}}>选择性别</ListItem.Title>
           </ListItem.Content>
@@ -328,13 +373,13 @@ class Index extends Component {
             onSubmitEditing={this.nickNameUpdate}
           />
         </Overlay>
-        {/* 性别 弹出框 */}
-        <Overlay isVisible={isShowGender} onBackdropPress={() => this.setState({isShowGender: false})}>
-          <View style={{width: pxToDp(200), height: pxToDp(60), justifyContent: 'space-evenly'}}>
-            <Text style={{color: '#666'}} onPress={() => this.genderUpdate('男')}>男</Text>
-            <Text style={{color: '#666'}} onPress={() => this.genderUpdate('女')}>女</Text>
-          </View>
-        </Overlay>
+        <View style={{alignItems: 'center', marginTop: pxToDp(40)}}>
+          <THButton
+            style={{width: '80%', height: pxToDp(40)}}
+            onPress={this.onSubmitUser}
+            disabled={submitLoading}
+          >确认</THButton>
+        </View>
       </View>
     )
   }

@@ -94,7 +94,7 @@ class Index extends Component {
     // 额外的数据 => 当前登录用户信息
     const guid = this.state.userDetail.guid
     const text = this.props.UserStore.user.nick_name + ' 喜欢了你'
-    const extras = { user: JSON.stringify(this.props.UserStore.user)}
+    const extras = { user: JSON.stringify(this.props.UserStore.user), type: 'like'}
     const res = await JMessage.sendTextMessage(guid, text, extras)
     Toast.smile('喜欢成功', 1000, 'center')
   }
